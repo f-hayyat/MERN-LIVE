@@ -10,7 +10,10 @@ const LoadItems = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:3000/todos")
+    const apiUrl = import.meta.env.VITE_API_URL;
+    console.log(import.meta.env);
+    console.log(apiUrl);
+    fetch(`${apiUrl}/todos`)
       .then((res) => res.json())
       .then((items) => {
         const newItems = items.map(todoItemToClientModel);
