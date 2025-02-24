@@ -18,7 +18,7 @@ const CustomerProduct = ({product, cart}) => {
     <div key={product._id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
       <div className="relative flex justify-center">
         <img 
-          src={"http://localhost:3000/" + product.imageUrl} 
+          src={`${import.meta.env.VITE_API_BASE_URL}/` + product.imageUrl} 
           alt={product.name} 
           className="w-64 object-cover transform hover:scale-105 transition-transform duration-300" 
         />
@@ -35,7 +35,7 @@ const CustomerProduct = ({product, cart}) => {
       <div className="p-5">
         <div className="flex justify-between items-start mb-2">
           <h2 className="text-xl font-bold text-gray-900">{product.name}</h2>
-          <p className="text-lg font-bold text-indigo-600">₹{product.price}</p>
+          <p className="text-lg font-bold text-indigo-600">Rs: {product.price}</p>
         </div>
         
         <p className="text-sm text-gray-600 mb-2">{product.brand}</p>

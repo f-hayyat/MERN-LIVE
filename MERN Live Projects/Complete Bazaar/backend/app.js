@@ -12,8 +12,9 @@ const sellerRouter = require('./routers/sellerRouter');
 const authRouter = require('./routers/authRouter');
 const customerRouter = require('./routers/customerRouter');
 const { isLoggedIn, isSeller, isCustomer } = require('./middleware/auth');
+const paymentRouter = require('./routers/paymentRouter');
 const MONGO_DB_URL =
-  `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@kgcluster.ie6mb.mongodb.net/${process.env.MONGO_DB_DATABASE}`;
+ `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@kgcoding.zt6oe.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority&appName=KGcoding`;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,6 +25,7 @@ app.use(cors());
 app.use('/api/auth', authRouter);
 app.use('/api/seller', isLoggedIn, isSeller, sellerRouter);
 app.use('/api/customer', isLoggedIn, isCustomer, customerRouter);
+app.use('/api', paymentRouter);
 app.use(errorController.get404);
 
 const PORT = process.env.PORT || 3000;

@@ -16,7 +16,7 @@ const SellerHome = () => {
 
   const handleDeleteProduct = async (productId) => {
     const token = localStorage.getItem('token');
-    const response = await fetch(`http://localhost:3000/api/seller/products/${productId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/seller/products/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

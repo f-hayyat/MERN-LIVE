@@ -26,7 +26,7 @@ const AddProduct = () => {
     formData.append('rating', ratingRef.current.value);
     formData.append('image', imageRef.current.files[0]);
 
-    const response = await fetch("http://localhost:3000/api/seller/products", {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/seller/products`, {
       method: "POST",
       body: formData,
       headers: {

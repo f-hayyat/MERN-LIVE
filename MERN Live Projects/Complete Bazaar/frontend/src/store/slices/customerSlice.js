@@ -11,7 +11,7 @@ const initialState = {
 export const fetchCustomerData = createAsyncThunk('customer/fetchCustomerData',
   async () => {
     const token = localStorage.getItem("token");
-    const response = await fetch('http://localhost:3000/api/customer/data', {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/customer/data`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -28,7 +28,7 @@ export const fetchCustomerData = createAsyncThunk('customer/fetchCustomerData',
 export const addToCart = createAsyncThunk('customer/addToCart',
   async (productId) => {
     const token = localStorage.getItem("token");
-    const response = await fetch(`http://localhost:3000/api/customer/cart/${productId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/customer/cart/${productId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ export const addToCart = createAsyncThunk('customer/addToCart',
 export const removeFromCart = createAsyncThunk('customer/removeFromCart',
   async (productId) => {
     const token = localStorage.getItem("token");
-    const response = await fetch(`http://localhost:3000/api/customer/cart/${productId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/customer/cart/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ export const removeFromCart = createAsyncThunk('customer/removeFromCart',
 export const placeOrder = createAsyncThunk('customer/placeOrder',
   async () => {
     const token = localStorage.getItem("token");
-    const response = await fetch('http://localhost:3000/api/customer/order', {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/customer/order`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

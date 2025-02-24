@@ -19,8 +19,8 @@ const lastNameValidator = check('lastName')
 // Email Validator
 const emailValidator = check('email')
   .isEmail()
-  .withMessage('Please enter a valid email')
-  .normalizeEmail();
+  .withMessage('Please enter a valid email');
+ 
 
 // Password Validator
 const passwordValidator = check('password')

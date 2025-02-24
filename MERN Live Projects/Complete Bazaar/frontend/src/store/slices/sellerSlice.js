@@ -9,7 +9,7 @@ const initialState = {
 export const fetchSellerProducts = createAsyncThunk('seller/fetchSellerProducts',
   async () => {
     const token = localStorage.getItem("token");
-    const response = await fetch('http://localhost:3000/api/seller/products', {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/seller/products`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

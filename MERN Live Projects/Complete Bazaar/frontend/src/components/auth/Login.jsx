@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import ErrorMessages from '../common/ErrorMessages';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/slices/authSlice';
@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessages([]);
-    const res = await fetch("http://localhost:3000/api/auth/login", {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,8 +26,9 @@ const Login = () => {
     });
 
     const data = await res.json();
+    console.log(data);
     if (res.status === 200) {
-      dispatch(login(data));
+      await dispatch(login(data));
       navigate("/");
     } else if (res.status === 401) {
       setErrorMessages(data.errorMessages)
@@ -52,13 +53,37 @@ const Login = () => {
         </div>
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-          <input
-            type="password"
-            id="password"
-            ref={passwordRef}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-2 py-1"
-            required
-          />
+          <div className="relative">
+            <input
+              type="password"
+              id="password"
+              ref={passwordRef}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-2 py-1"
+              required
+            />
+            <button
+              type="button"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              onClick={() => {
+                const passwordInput = document.getElementById('password');
+                if (passwordInput.type === 'password') {
+                  passwordInput.type = 'text';
+                } else {
+                  passwordInput.type = 'password';
+                }
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-red-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </button>
+          </div>
+          <div className="text-right mt-1">
+            <Link to="/forgot-password" className="text-sm text-indigo-600 hover:text-indigo-500">
+              Forgot password?
+            </Link>
+          </div>
         </div>
         <div>
           <button

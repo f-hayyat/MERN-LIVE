@@ -20,7 +20,7 @@ const CartProduct = ({product}) => {
           <h2 className="text-lg font-semibold text-gray-900">{product.name}</h2>
           <p className="text-sm text-gray-600">{product.brand}</p>
           <div className="mt-1">
-            <span className="text-lg font-bold text-indigo-600">₹{product.price}</span>
+            <span className="text-lg font-bold text-indigo-600">Rs: {product.price}</span>
           </div>
         </div>
       </div>
