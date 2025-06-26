@@ -99,7 +99,7 @@ const adminProductsSlice = createSlice({
             })
             .addCase(fetchAllProducts.fulfilled, (state, action) => {
                 state.loading = false;
-                state.products = action.payload.products;
+                state.products = action.payload;
             })
             .addCase(fetchAllProducts.rejected, (state, action) => {
                 state.loading = false;

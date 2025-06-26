@@ -1,49 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllOrders, updateOrderDeliveryStatus, deleteOrder } from "../../redux/slices/adminOrdersSlice";
 
 const OrderManagement = () => {
-    const orders = [
-        {
-            _id: 1,
-            user: {
-                name: "John Doe",
-            },
-            totalPrice: 100,
-            status: "Pending",
-            createdAt: "2023-10-01",
-        },
-        {
-            _id: 2,
-            user: {
-                name: "Jane Smith",
-            },
-            totalPrice: 200,
-            status: "Shipped",
-            createdAt: "2023-10-02",
-        },
-        {
-            _id: 3,
-            user: {
-                name: "Alice Johnson",
-            },
-            totalPrice: 150,
-            status: "Delivered",
-            createdAt: "2023-10-03",
-        },
-        {
-            _id: 4,
-            user: {
-                name: "Bob Brown",
-            },
-            totalPrice: 250,
-            status: "Cancelled",
-            createdAt: "2023-10-04",
-        },
-    ];
+  
+    const dispatch = useDispatch();
+    const {orders, loading, error} = useSelector((state) => state.adminOrders);
+
+    useEffect(() => {
+        dispatch(fetchAllOrders());
+    }, [dispatch]);
 
     const handleStatusChange = (orderId, status) => {
         // Handle status change logic here
-        console.log(`Order ID: ${orderId}, New Status: ${status}`);
+        dispatch(updateOrderDeliveryStatus({ id:orderId, status }));
     };
+
+    const handleDeleteOrder = (orderId) => {
+        dispatch(deleteOrder(orderId));
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
     return (
         <div className="max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg">
             <h1 className="text-3xl font-bold mb-6">Order Management</h1>
@@ -88,7 +71,7 @@ const OrderManagement = () => {
                                         }
                                         className="border border-gray-300 rounded-md p-2"
                                     >
-                                        <option value="Pending">Pending</option>
+                                        <option value="Processing">Processing</option>
                                         <option value="Shipped">Shipped</option>
                                         <option value="Delivered">Delivered</option>
                                         <option value="Cancelled">Cancelled</option>

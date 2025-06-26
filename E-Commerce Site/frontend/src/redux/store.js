@@ -6,7 +6,7 @@ import checkoutReducer from "./slices/checkoutSlice";
 import orderReducer from "./slices/orderSlice";
 import adminUsersReducer from "./slices/adminUsersSlice";
 import adminProductsReducer from "./slices/adminProductsSlice";
-import adminOrdersReducer from "./slices/adminOrdesSlice";
+import adminOrdersReducer from "./slices/adminOrdersSlice";
 
 const store = configureStore({
     reducer: {

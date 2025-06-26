@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(errorController.get404);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3012;
 mongoose.connect(MONGO_DB_URL).then(() => {
   app.listen(PORT, () => {
     console.log(`Server running at: http://localhost:${PORT}`);

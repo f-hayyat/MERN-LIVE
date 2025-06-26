@@ -5,6 +5,13 @@ const { protect, isAdmin } = require("../middlewares/authMiddleware")
 
 adminProductsRouter.get("/", protect, isAdmin, adminProductsController.getAllProducts)
 
+// adminProductsRouter.post("/", protect, isAdmin, adminProductsController.createProduct)
+
+ adminProductsRouter.put("/:id", protect, isAdmin, adminProductsController.updateProduct)
+
+// adminProductsRouter.delete("/:id", protect, isAdmin, adminProductsController.deleteProduct)
+
+
 
 
 

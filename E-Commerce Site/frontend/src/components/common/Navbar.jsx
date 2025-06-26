@@ -12,6 +12,11 @@ const Navbar = () => {
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const { cart } = useSelector((state) => state.cart);
+	// const { user } = useSelector((state) => state.auth);
+
+	const user = JSON.parse(localStorage.getItem("userInfo"));
+	const userId = user?._id;
+
 	const cartItemsCount =
     cart?.products?.reduce((total, product) => {
         return total + product.quantity;
@@ -73,12 +78,14 @@ const Navbar = () => {
 				</div>
 				{/* Right icons */}
 				<div className="flex items-center space-x-5 mr-2">
-					<Link
-						to="/admin"
-						className="text-white bg-gray-800 hover:bg-black px-3 py-1 rounded-md block"
+					{user && user.role === "admin" && (
+						<Link
+							to="/admin"
+							className="text-white bg-gray-800 hover:bg-black px-3 py-1 rounded-md block"
 					>
-						<span className="text-sm font-medium">Admin</span>
-					</Link>
+							<span className="text-sm font-medium">Admin</span>
+						</Link>
+					)}
 					<Link to="/profile" className="text-gray-700 hover:text-black ">
 						<VscAccount className="text-2xl" />
 					</Link>

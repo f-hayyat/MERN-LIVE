@@ -20,10 +20,10 @@ const getAuthHeaders = () => {
 // Thunks
 export const fetchCart = createAsyncThunk(
 	"/cart/fetchCart",
-	async ({ guestId }, { rejectWithValue }) => {
+	async ({ guestId , userId }, { rejectWithValue }) => {
 		try {
 			const response = await axios.get(`${BASE_URL}/api/cart`, {
-				params: { guestId },
+				params: { guestId , userId },
 				...getAuthHeaders(),
 			});
 			return response.data;
@@ -38,13 +38,13 @@ export const fetchCart = createAsyncThunk(
 export const addProductToCart = createAsyncThunk(
 	"/cart/addProduct",
 	async (
-		{ guestId, productId, quantity, size, color },
+		{ userId, guestId, productId, quantity, size, color },
 		{ rejectWithValue }
 	) => {
 		try {
 			const response = await axios.post(
 				`${BASE_URL}/api/cart`,
-				{ guestId, productId, quantity, size, color },
+				{ userId, guestId, productId, quantity, size, color },
 				getAuthHeaders()
 			);
 			return response.data;
@@ -57,13 +57,13 @@ export const addProductToCart = createAsyncThunk(
 export const updateProductQuantity = createAsyncThunk(
 	"/cart/updateProduct",
 	async (
-		{ guestId, productId, quantity, size, color },
+		{ userId, guestId, productId, quantity, size, color },
 		{ rejectWithValue }
 	) => {
 		try {
 			const response = await axios.put(
 				`${BASE_URL}/api/cart`,
-				{ guestId, productId, quantity, size, color },
+				{ userId, guestId, productId, quantity, size, color },
 				getAuthHeaders()
 			);
 			return response.data;
@@ -77,10 +77,10 @@ export const updateProductQuantity = createAsyncThunk(
 
 export const removeProductFromCart = createAsyncThunk(
 	"/cart/removeProduct",
-	async ({ guestId, productId, size, color }, { rejectWithValue }) => {
+	async ({ userId, guestId, productId, size, color }, { rejectWithValue }) => {
 		try {
 			const response = await axios.delete(`${BASE_URL}/api/cart`, {
-				data: { guestId, productId, size, color },
+				data: { userId, guestId, productId, size, color },
 				...getAuthHeaders(),
 			});
 			return response.data;

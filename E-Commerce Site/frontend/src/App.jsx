@@ -24,40 +24,40 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Toaster richColors position="top-right" />
-        <Routes>
-          <Route path="/" element={<UserLayout />}>
-            <Route index element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route
-              path="/collections/:collection"
-              element={<CollectionsPage />}
-            />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/order-confirm" element={<OrderConfirmation />} />
-            <Route path="/order/:id" element={<OrderDetailsPage />} />
-            <Route path="/my-orders" element={<MyOrders />} />
-          </Route>
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminHomePage />} />
-            <Route path="/admin/users" element={<UserManagement />} />
-            <Route path="/admin/products" element={<ProductManagement />} />
-            <Route
-              path="/admin/products/:id/edit"
-              element={<EditProductPage />}
-            />
-            <Route path="/admin/orders" element={<OrderManagement />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </Provider>
-  );
+	return (
+		<Provider store={store}>
+			<BrowserRouter>
+				<Toaster richColors position="top-right" />
+				<Routes>
+					<Route path="/" element={<UserLayout />}>
+						<Route index element={<Home />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/signup" element={<Signup />} />
+						<Route path="/profile" element={<Profile />} />
+						<Route
+							path="/collections/:collection"
+							element={<CollectionsPage />}
+						/>
+						<Route path="/product/:id" element={<ProductDetails />} />
+						<Route path="/checkout" element={<Checkout />} />
+						<Route path="/order-confirm" element={<OrderConfirmation />} />
+						<Route path="/order/:id" element={<OrderDetailsPage />} />
+						<Route path="/my-orders" element={<MyOrders />} />
+					</Route>
+					<Route path="/admin" element={<AdminLayout />}>
+						<Route index element={<AdminHomePage />} />
+						<Route path="/admin/users" element={<UserManagement />} />
+						<Route path="/admin/products" element={<ProductManagement />} />
+						<Route
+							path="/admin/products/:id/edit"
+							element={<EditProductPage />}
+						/>
+						<Route path="/admin/orders" element={<OrderManagement />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		</Provider>
+	);
 };
 
 export default App;

@@ -45,11 +45,11 @@ export const addUser = createAsyncThunk(
 // Update user status
 export const updateUserStatus = createAsyncThunk(
     "admin/updateUserStatus",
-    async ({ id, name, email, role }, { rejectWithValue }) => {
+    async ({ id, name, email, newRole }, { rejectWithValue }) => {
         try {
             const response = await axios.patch(
                 `${import.meta.env.VITE_BASE_URL}/api/admin/users/${id}`,
-                { name, email, role },
+                { name, email, role: newRole },
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
@@ -102,7 +102,7 @@ const adminUsersSlice = createSlice({
             })
             .addCase(fetchAllUsers.fulfilled, (state, action) => {
                 state.loading = false;
-                state.users = action.payload.users;
+                state.users = action.payload;
                 state.success = true;
             })
             .addCase(fetchAllUsers.rejected, (state, action) => {

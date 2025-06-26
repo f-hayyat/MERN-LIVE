@@ -3,15 +3,20 @@ const Cart = require("../models/cartModel");
 
 // Helper: Get cart by user or guest
 const getCart = async (userId, guestId) => {
-	if (userId) return await Cart.findOne({ user: userId });
-	if (guestId) return await Cart.findOne({ guestId });
+	if (userId) {
+		// Only look for user cart if logged in
+		return await Cart.findOne({ user: userId });
+	}
+	if (guestId) {
+		return await Cart.findOne({ guestId });
+	}
 	return null;
 };
 
 // Add product to cart
 exports.addToCart = async (req, res) => {
-	const { productId, quantity, size, color, guestId } = req.body;
-	const userId = req.user?.userId; // Extracted from auth middleware if available
+	const { productId, quantity, size, color, guestId, userId } = req.body;
+	
 
 	try {
 		const product = await Product.findById(productId);
@@ -77,8 +82,7 @@ exports.addToCart = async (req, res) => {
 
 // Update quantity of product in cart
 exports.updateCartItem = async (req, res) => {
-	const { productId, quantity, size, color, guestId } = req.body;
-	const userId = req.user?.userId;
+	const { productId, quantity, size, color, guestId , userId } = req.body;
 
 	try {
 		const cart = await getCart(userId, guestId);
@@ -118,8 +122,7 @@ exports.updateCartItem = async (req, res) => {
 
 // Delete product from cart
 exports.deleteCartItem = async (req, res) => {
-	const { productId, size, color, guestId } = req.body;
-	const userId = req.user?.userId;
+	const { productId, size, color, guestId , userId } = req.body;
 
 	try {
 		const cart = await getCart(userId, guestId);
@@ -155,8 +158,8 @@ exports.deleteCartItem = async (req, res) => {
 
 // Get cart for user or guest
 exports.getCart = async (req, res) => {
-	const { guestId } = req.query;
-	const userId = req.user?.userId;
+	const { guestId, userId } = req.query;
+	
 
 	try {
 		const cart = await getCart(userId, guestId);

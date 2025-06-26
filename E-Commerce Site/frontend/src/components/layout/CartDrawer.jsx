@@ -7,9 +7,10 @@ import { fetchCart } from "../../redux/slices/cartSlice";
 
 const CartDrawer = ({ toggleDrawer, drawerOpen }) => {
 	const dispatch = useDispatch();
-	const { user, guestId } = useSelector((state) => state.auth);
+	const { guestId } = useSelector((state) => state.auth);
 	const { cart, loading } = useSelector((state) => state.cart);
-	const userId = user ? user._id : null;
+	const user = JSON.parse(localStorage.getItem("userInfo"));
+	const userId = user?._id;
 	const navigate = useNavigate();
 
 	const hasCartItems = useMemo(

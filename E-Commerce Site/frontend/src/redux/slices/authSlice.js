@@ -39,7 +39,7 @@ export const loginUser = createAsyncThunk(
 
 // Async thunk for user registration
 export const registerUser = createAsyncThunk(
-    "auth/register",
+    "auth/signup",
     async (userData, { rejectWithValue }) => {
         try {
             const response = await axios.post(
@@ -65,6 +65,7 @@ const authSlice = createSlice({
             state.guestId = `guest_${new Date().getTime()}`; // reset guest ID
             localStorage.removeItem("userInfo");
             localStorage.removeItem("userToken");
+            localStorage.removeItem("cart");
             localStorage.setItem("guestId", state.guestId); // update guest ID in local storage
         },
         generateNewGuestId: (state) => {

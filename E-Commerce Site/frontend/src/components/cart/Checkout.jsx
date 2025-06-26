@@ -1,37 +1,13 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { createCheckoutSession } from "../../redux/slices/checkoutSlice";
+import { useDispatch } from "react-redux";
 
 const Checkout = () => {
-	const cart = {
-		products: [
-			{
-				id: 1,
-				name: "Classic T-Shirt",
-				size: "M",
-				color: "Blue",
-				price: 29.99,
-				image: "https://picsum.photos/200/300?random=1",
-			},
-			{
-				id: 2,
-				name: "Denim Jeans",
-				size: "32",
-				color: "Dark Blue",
-				price: 59.99,
-				image: "https://picsum.photos/200/300?random=2",
-			},
-			{
-				id: 3,
-				name: "Running Shoes",
-				size: "42",
-				color: "Black",
-				price: 89.99,
-				image: "https://picsum.photos/200/300?random=3",
-			},
-		],
-		totalPrice: 179.97,
-	};
+	const { cart } = useSelector((state) => state.cart);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [checkoutId, setCheckoutId] = useState(null);
 	const [shippingAddress, setShippingAddress] = useState({
 		firstName: "",
@@ -43,13 +19,23 @@ const Checkout = () => {
 		phone: "",
 	});
 
+	const totalQuantity = cart.products.reduce(
+		(total, item) => total + item.quantity,
+		0
+	);
+
 	const handleCreateCheckout = async (e) => {
 		e.preventDefault();
 		// Simulate a checkout process
 		const orderId = Math.floor(Math.random() * 10000); // Simulated order ID
 		setCheckoutId(orderId);
-		// Here you would typically send the order details to your backend for processing
-		console.log("Order Created:", { ...shippingAddress, orderId });
+		const checkoutData = {
+			checkoutItems: cart.products,
+			shippingAddress,
+			paymentMethod: "cash",
+			totalPrice: cart.totalPrice,
+		};
+		await dispatch(createCheckoutSession(checkoutData)).unwrap();
 	};
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 py-10 px-6 max-w-7xl mx-auto">
@@ -204,6 +190,7 @@ const Checkout = () => {
 					<div className="mb-6">
 						{!checkoutId ? (
 							<button
+								onClick={handleCreateCheckout}
 								type="button"
 								className="bg-gray-800 hover:bg-black text-white rounded-lg px-4 py-2 w-full"
 							>
@@ -230,7 +217,7 @@ const Checkout = () => {
 				<h2 className="text-2xl uppercase mb-6 font-semibold">Order Summary</h2>
 				<div className="border-t py-4 mb-6">
 					{cart.products.map((product) => (
-						<div key={product.id} className="flex items-center mb-4">
+						<div key={product.productId} className="flex items-center mb-4">
 							<img
 								src={product.image}
 								alt={product.name}
@@ -240,6 +227,7 @@ const Checkout = () => {
 								<h3 className="text-lg font-semibold">{product.name}</h3>
 								<p className="text-gray-600">Size: {product.size}</p>
 								<p className="text-gray-600">Color: {product.color}</p>
+								<p className="text-gray-600">Quantity: {product.quantity}</p>
 							</div>
 							<p className="text-lg font-semibold">
 								${product.price.toFixed(2)}
@@ -249,7 +237,7 @@ const Checkout = () => {
 				</div>
 				<div className="border-t pt-4 flex justify-between items-center">
 					<h3 className="text-lg font-semibold">Items</h3>
-					<p className="text-gray-600">{cart.products.length} </p>
+					<p className="text-gray-600">{totalQuantity} </p>
 				</div>
 				<div className="border-t pt-4 flex justify-between items-center">
 					<h3 className="text-lg font-semibold">Subtotal</h3>
